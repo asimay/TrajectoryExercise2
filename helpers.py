@@ -104,9 +104,9 @@ def show_trajectory(s_coeffs, d_coeffs, T, vehicle=None):
     plt.show()
 
 def get_f_and_N_derivatives(coeffs, N=3):
-    functions = [to_equation(coeffs)]
+    functions = [to_equation(coeffs)] # original function
     for i in range(N):
-        coeffs = differentiate(coeffs)
-        functions.append(to_equation(coeffs))
+        coeffs = differentiate(coeffs) # derivative
+        functions.append(to_equation(coeffs)) # add to list
     return functions
 

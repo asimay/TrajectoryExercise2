@@ -12,38 +12,39 @@ def time_diff_cost(traj, target_vehicle, delta, T, predictions):
     return logistic(float(abs(t-T)) / T)
 
 def s_diff_cost(traj, target_vehicle, delta, T, predictions):
-    print("s_diff_cost: ", T)
+    # print("s_diff_cost: ", T)
     """
     Penalizes trajectories whose s coordinate (and derivatives) 
     differ from the goal.
     """
     s, _, T = traj
-    target = predictions[target_vehicle].state_in(T)
-    target = list(np.array(target) + np.array(delta))
-    s_targ = target[:3]
-    S = [f(T) for f in get_f_and_N_derivatives(s, 2)]
+    target = predictions[target_vehicle].state_in(T) # target vehicle's state at time T
+    target = list(np.array(target) + np.array(delta)) # my desired position
+    s_targ = target[:3]# target's s vals
+    S = [f(T) for f in get_f_and_N_derivatives(s, 2)] # calculate the s vals at time T
+    # print("S: ", S)
     cost = 0
     for actual, expected, sigma in zip(S, s_targ, SIGMA_S):
-        diff = float(abs(actual-expected))
-        cost += logistic(diff/sigma)
-    return cost
+        diff = float(abs(actual-expected)) # difference between the my desired s vals and target vehicle's s vals
+        cost += logistic(diff/sigma) # how off were they? if the vehicle the desired distance away from me
+    return cost # cost of how off the calculated values are from the expected value
 
 def d_diff_cost(traj, target_vehicle, delta, T, predictions):
-    print("d_diff_cost: ", T)
+    # print("d_diff_cost: ", T)
     """
     Penalizes trajectories whose d coordinate (and derivatives) 
     differ from the goal.
     """
     _, d_coeffs, T = traj
     
-    d_dot_coeffs = differentiate(d_coeffs)
-    d_ddot_coeffs = differentiate(d_dot_coeffs)
+    d_dot_coeffs = differentiate(d_coeffs) # calculates velocity
+    d_ddot_coeffs = differentiate(d_dot_coeffs) # calculates acceleration
 
-    d = to_equation(d_coeffs)
-    d_dot = to_equation(d_dot_coeffs)
-    d_ddot = to_equation(d_ddot_coeffs)
+    d = to_equation(d_coeffs) # position
+    d_dot = to_equation(d_dot_coeffs) # velocity
+    d_ddot = to_equation(d_ddot_coeffs) # acceleration
 
-    D = [d(T), d_dot(T), d_ddot(T)]
+    D = [d(T), d_dot(T), d_ddot(T)] # functions to calculate the d vals at time T
     
     target = predictions[target_vehicle].state_in(T)
     target = list(np.array(target) + np.array(delta))
