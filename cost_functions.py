@@ -56,7 +56,7 @@ def d_diff_cost(traj, target_vehicle, delta, T, predictions):
     return cost
 
 def collision_cost(traj, target_vehicle, delta, T, predictions):
-    print("collision_cost: ", T)
+    # print("collision_cost: ", T)
     """
     Binary cost function which penalizes collisions.
     """
@@ -65,7 +65,7 @@ def collision_cost(traj, target_vehicle, delta, T, predictions):
     else : return 0.0
 
 def buffer_cost(traj, target_vehicle, delta, T, predictions):
-    print("buffer_cost: ", T)
+    # print("buffer_cost: ", T)
     """
     Penalizes getting close to other vehicles.
     """
@@ -73,15 +73,15 @@ def buffer_cost(traj, target_vehicle, delta, T, predictions):
     return logistic(2*VEHICLE_RADIUS / nearest)
     
 def stays_on_road_cost(traj, target_vehicle, delta, T, predictions):
-    print("stays_on_road_cost: ", T)
+    # print("stays_on_road_cost: ", T)
     pass
 
 def exceeds_speed_limit_cost(traj, target_vehicle, delta, T, predictions):
-    print("exceeds_speed_limit_cost: ", T)
+    # print("exceeds_speed_limit_cost: ", T)
     pass
 
 def efficiency_cost(traj, target_vehicle, delta, T, predictions):
-    print("efficiency_cost: ", T)
+    # print("efficiency_cost: ", T)
     """
     Rewards high average speeds.
     """

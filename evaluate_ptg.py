@@ -5,7 +5,7 @@ def main():
 	vehicle = Vehicle([0,10,0, 0,0,0])
 	predictions = {0: vehicle}
 	target = 0
-	delta = [-10, 0, 0, 0, 0 ,0]
+	delta = [0, 0, 0, 0, 0 ,0]
 	start_s = [10, 10, 0]
 	start_d = [4, 0, 0]
 	# print("start_s: ", start_s, "start_d: ", start_d)
